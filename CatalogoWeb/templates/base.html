@@ -8,6 +8,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
+    <!-- Google Fonts - Fuente moderna para el logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -19,6 +22,22 @@
             max-width: 100%;
         }
         
+        /* Banner superior rojo */
+        .top-banner {
+            background-color: #fb3463;
+            color: white;
+            text-align: center;
+            padding: 3px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Ocultar salto de línea en desktop */
+        .top-banner br {
+            display: none;
+        }
+        
         /* Header normal (no fijo) */
         .navbar {
             position: static;
@@ -26,7 +45,42 @@
             z-index: 1030;
         }
         
-
+        /* Aplicar fuente moderna al logo */
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        
+        /* Estilos para el logo de texto */
+        .logo-text {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 1.2rem;
+            margin-right: 2px;
+        }
+        
+        .logo-letter {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fb3463;
+            background: linear-gradient(45deg, #fb3463, #e02e57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-word {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
         
         .navbar-brand img {
             height: 40px;
@@ -157,6 +211,11 @@
         }
         /* Optimización para móviles */
         @media (max-width: 768px) {
+            /* Mostrar salto de línea en móviles */
+            .top-banner br {
+                display: inline;
+            }
+            
             .carousel-item img {
                 height: 160px; /* Reducido 60% de 400px a 160px */
                 object-fit: cover; /* Revertido de 'contain' a 'cover' para recortar imágenes */
@@ -184,6 +243,25 @@
             .navbar-brand img {
                 height: 80px; /* Restaurado al tamaño original */
             }
+            
+            /* Ajustar logo de texto en móviles */
+            .logo-text {
+                gap: 1px;
+            }
+            
+            .logo-icon {
+                font-size: 1rem;
+                margin-right: 1px;
+            }
+            
+            .logo-letter {
+                font-size: 1.5rem;
+            }
+            
+            .logo-word {
+                font-size: 1.2rem;
+            }
+            
             /* Reducir altura de cards en móviles */
             .card-img-top {
                 height: 140px; /* Reducido de 220px a 140px para móviles */
@@ -255,23 +333,78 @@
             main {
                 margin-top: 0; /* Sin margen superior ya que el header no es fijo */
             }
+            
+            /* Estilos específicos para móviles del contacto */
+            .d-lg-none .contact-text {
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+            
+            .d-lg-none .phone-number {
+                font-size: 1.4rem;
+                font-weight: 700;
+                margin-left: 8px;
+            }
 
 
+        }
+        /* Estilos para el número telefónico */
+        .contact-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .phone-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #000000;
+            margin-left: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Aplicar fuente moderna a toda la tipografía */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
+    <!-- Banner superior rojo -->
+    <div class="top-banner">
+        ¡Bodegón en Caracas con<br>delivery y Servicio Pick-Up!
+    </div>
+ 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="{% url 'catalogo:home' %}">
-                <img src="{% static 'img/Logo.png' %}" alt="Logo de la empresa">
+                <div class="logo-text">
+                    <span class="logo-icon">🛒</span>
+                    <span class="logo-letter">N</span>
+                    <span class="logo-word">'Market</span>
+                </div>
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-flex align-items-center">
+                <!-- Icono de búsqueda -->
+                <button class="btn btn-link me-2" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                    <i class="fas fa-search"></i>
+                </button>
+                
+                <!-- Botón del menú hamburguesa -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             
+            <!-- Menú colapsable -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -299,19 +432,17 @@
                         </ul>
                     </li>
                 </ul>
-                
-                <!-- Formulario de búsqueda centrado -->
-                <form class="d-flex mx-auto" method="GET" action="{% url 'catalogo:buscar_productos' %}">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar productos..." aria-label="Buscar">
-                    <button class="btn btn-outline-success" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                
-                
             </div>
         </div>
     </nav>
+
+         <!-- Contacto telefónico móvil -->
+     <div class="d-lg-none py-2 text-center" style="background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+         <span class="contact-text">
+             ESCRIBENOS AHORA 
+             <span class="phone-number">+58 416 4115781</span>
+         </span>
+     </div>
 
     <!-- Contenido principal -->
     <main class="container my-4">
@@ -355,5 +486,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     
+    <!-- Modal de búsqueda -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Buscar productos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="GET" action="{% url 'catalogo:buscar_productos' %}">
+                        <div class="input-group">
+                            <input class="form-control" type="search" name="q" placeholder="Buscar productos..." aria-label="Buscar">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
