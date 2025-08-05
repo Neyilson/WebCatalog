@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ categoria.nombre }} - Catálogo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Filtros -->
+    <div class="col-lg-3 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-filter"></i> Categorías
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'catalogo:lista_productos' %}" class="list-group-item list-group-item-action">
+                        Todas las categorías
+                    </a>
+                    {% for cat in categorias %}
+                    <a href="{% url 'catalogo:productos_por_categoria' cat.id %}" 
+                       class="list-group-item list-group-item-action {% if cat.id == categoria.id %}active{% endif %}">
+                        {{ cat.nombre }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Productos de la Categoría -->
+    <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2>
+                    <i class="fas fa-tag"></i> {{ categoria.nombre }}
+                </h2>
+                <p class="text-muted mb-0">{{ productos.count }} producto{{ productos.count|pluralize }} en esta categoría</p>
+            </div>
+            <a href="{% url 'catalogo:lista_productos' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Ver Todos los Productos
+            </a>
+        </div>
+        
+        <!-- Grid de Productos -->
+        <div class="row g-2 g-md-3">
+            {% for producto in productos %}
+            <div class="col-6 col-lg-4 mb-3">
+                <a href="{% url 'catalogo:detalle_producto' producto.id %}" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm product-card">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-dark">{{ producto.nombre }}</h5>
+                            <p class="card-text text-muted">{{ producto.descripcion|truncatewords:15 }}</p>
+                            
+                            <div class="mt-auto">
+                                <p class="card-text">
+                                    <span class="price-highlight">${{ producto.precio }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle"></i> No hay productos disponibles en esta categoría.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Administración - Catálogo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-chart-bar"></i> Panel de Administración
+        </h2>
+    </div>
+</div>
+
+<!-- Estadísticas -->
+<div class="row mb-4">
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ total_productos }}</h4>
+                        <p class="card-text">Total Productos</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-box fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ total_categorias }}</h4>
+                        <p class="card-text">Total Categorías</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-tags fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Productos recientes -->
+<div class="row">
+    <div class="col-12">
+        <h4 class="mb-3"><i class="fas fa-clock"></i> Productos Recientes</h4>
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos_recientes %}
+                    <tr>
+                        <td style="width: 80px;">
+                            {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="img-thumbnail" style="height: 60px; width: 60px; object-fit: cover;" alt="{{ producto.nombre }}">
+                            {% else %}
+                            <div class="img-thumbnail d-flex align-items-center justify-content-center" style="height: 60px; width: 60px;">
+                                <i class="fas fa-image text-muted"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'catalogo:detalle_producto' producto.id %}">{{ producto.nombre }}</a>
+                        </td>
+                        <td>
+                            {% if producto.categoria %}
+                                {{ producto.categoria.nombre }}
+                            {% else %}
+                                <span class="text-muted">Sin categoría</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>${{ producto.precio }}</strong>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No hay productos recientes.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

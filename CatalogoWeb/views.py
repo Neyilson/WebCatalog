@@ -42,13 +42,20 @@ def lista_productos(request):
 def detalle_producto(request, producto_id):
     """Vista para mostrar los detalles de un producto específico"""
     producto = get_object_or_404(Producto, id=producto_id)
-    productos_relacionados = Producto.objects.filter(
-        categoria=producto.categoria
-    ).exclude(id=producto.id)[:4]
+    
+    # Productos relacionados solo si el producto tiene categoría
+    productos_relacionados = []
+    if producto.categoria:
+        productos_relacionados = Producto.objects.filter(
+            categoria=producto.categoria
+        ).exclude(id=producto.id)[:4]
+    
+    categorias = Categoria.objects.all()
     
     context = {
         'producto': producto,
         'productos_relacionados': productos_relacionados,
+        'categorias': categorias,
     }
     return render(request, 'CatalogoWeb/detalle_producto.html', context)
 
@@ -69,8 +76,9 @@ def productos_por_categoria(request, categoria_id):
 # Vista para búsqueda de productos
 def buscar_productos(request):
     """Vista para buscar productos"""
-    query = request.GET.get('q', '')
+    query = request.GET.get('q', '').strip()
     productos = Producto.objects.all()
+    categorias = Categoria.objects.all()
     
     if query:
         productos = productos.filter(
@@ -82,6 +90,7 @@ def buscar_productos(request):
     context = {
         'productos': productos,
         'query': query,
+        'categorias': categorias,
     }
     return render(request, 'CatalogoWeb/buscar_productos.html', context)
 
@@ -108,10 +117,12 @@ def admin_panel(request):
     total_productos = Producto.objects.count()
     total_categorias = Categoria.objects.count()
     productos_recientes = Producto.objects.all()[:5]
+    categorias = Categoria.objects.all()
     
     context = {
         'total_productos': total_productos,
         'total_categorias': total_categorias,
         'productos_recientes': productos_recientes,
+        'categorias': categorias,
     }
     return render(request, 'CatalogoWeb/admin_panel.html', context)

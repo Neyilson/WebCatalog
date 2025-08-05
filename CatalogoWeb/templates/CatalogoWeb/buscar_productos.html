@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Búsqueda - Catálogo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-search"></i> Resultados de Búsqueda
+        </h2>
+        
+        {% if query %}
+        <div class="alert alert-info">
+            <i class="fas fa-search"></i> Resultados para: "<strong>{{ query }}</strong>"
+            <span class="float-end">{{ productos.count }} resultado{{ productos.count|pluralize }}</span>
+        </div>
+        {% endif %}
+        
+        <!-- Formulario de búsqueda -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="GET" action="{% url 'catalogo:buscar_productos' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Buscar productos...">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Resultados -->
+        <div class="row g-2 g-md-3">
+            {% for producto in productos %}
+            <div class="col-6 col-lg-4 mb-3">
+                <a href="{% url 'catalogo:detalle_producto' producto.id %}" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm product-card">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-dark">{{ producto.nombre }}</h5>
+                            <p class="card-text text-muted">{{ producto.descripcion|truncatewords:15 }}</p>
+                            
+                            {% if producto.categoria %}
+                            <span class="badge bg-secondary mb-2">{{ producto.categoria.nombre }}</span>
+                            {% endif %}
+                            
+                            <div class="mt-auto">
+                                <p class="card-text">
+                                    <span class="price-highlight">${{ producto.precio }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    {% if query %}
+                        No se encontraron productos que coincidan con tu búsqueda.
+                    {% else %}
+                        Ingresa un término de búsqueda para encontrar productos.
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
