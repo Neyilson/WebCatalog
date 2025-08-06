@@ -27,22 +27,63 @@
             background-color: #fb3463;
             color: white;
             text-align: center;
-            padding: 3px 0;
+            padding: 8px 0;
             font-size: 1rem;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
+            transition: transform 0.3s, opacity 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1060; /* Más alto que todo */
+            height: 40px; /* Altura fija para el banner */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Ocultar salto de línea en desktop */
-        .top-banner br {
-            display: none;
+        /* Ocultar banner al hacer scroll (cuando header está contraído) */
+        .top-banner.hide-banner {
+            transform: translateY(-100%);
+            opacity: 0;
         }
         
-        /* Header normal (no fijo) */
+        /* Header dinámico con scroll */
         .navbar {
-            position: static;
+            position: fixed;
+            top: 40px; /* Posición debajo del banner cuando está visible */
             width: 100%;
-            z-index: 1030;
+            z-index: 1050; /* Debajo del banner pero arriba del contacto */
+            transition: all 0.3s ease-in-out;
+            background-color: rgba(248, 249, 250, 0.95) !important;
+            backdrop-filter: blur(10px);
+            min-height: 56px; /* Altura mínima para el navbar */
+        }
+        
+        /* Ajustar posición del navbar cuando el banner está oculto */
+        .navbar.scrolled {
+            top: 0;
+        }
+        
+        /* Estado cuando se hace scroll */
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.98) !important;
+        }
+        
+        /* Ajustar logo cuando se hace scroll */
+        .navbar.scrolled .logo-text {
+            transform: scale(0.9);
+        }
+        
+        .navbar.scrolled .logo-letter {
+            font-size: 1.6rem;
+        }
+        
+        .navbar.scrolled .logo-word {
+            font-size: 1.2rem;
         }
         
         /* Aplicar fuente moderna al logo */
@@ -86,19 +127,50 @@
             height: 40px;
         }
         
-        /* Contenido principal normal */
+        /* Contenido principal con margen para header fijo */
         main {
-            margin-top: 0; /* Sin margen superior ya que el header no es fijo */
+            margin-top: 120px; /* Espacio para banner (40px) + navbar (56px) + padding (24px) */
+            transition: margin-top 0.3s ease-in-out;
+            position: relative;
+            z-index: 5; /* El más bajo de todos */
+            padding-top: 20px; /* Espacio adicional para evitar solapamiento */
+        }
+        
+        /* Ajustar margen cuando el banner está oculto */
+        .top-banner.hide-banner + .navbar + main,
+        .top-banner.hide-banner ~ main {
+            margin-top: 80px; /* Solo espacio para navbar cuando banner está oculto */
+        }
+        
+        /* Ajustar margen para móviles */
+        @media (max-width: 768px) {
+            /* En móviles, ocultar el banner para evitar solapamiento */
+            .top-banner {
+                display: none;
+            }
+            
+            /* Navbar en la parte superior en móviles */
+            .navbar {
+                top: 0 !important;
+            }
+            
+            main {
+                margin-top: 70px; /* Solo espacio para navbar en móviles */
+            }
+            
+            .top-banner.hide-banner ~ main {
+                margin-top: 70px; /* Mismo margen ya que banner está oculto */
+            }
         }
         
         .card-img-top {
-            height: 220px; /* Aumentado de 150px a 220px para cards más altas */
+            height: 180px; /* Reducido de 220px a 180px para cards más pequeñas */
             object-fit: contain; /* Cambiado de 'cover' a 'contain' para mostrar imagen completa */
         }
         
         /* Hacer las cards más altas en desktop */
         .product-card {
-            min-height: 380px; /* Altura mínima para cards más altas */
+            min-height: 340px; /* Reducido de 380px a 340px para cards más pequeñas */
         }
         
         /* Mejorar espaciado del contenido de las cards */
@@ -118,10 +190,10 @@
         
         /* Resaltar precio del producto */
         .product-card .price-highlight {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2.2rem; /* Aumentado de 1.8rem a 2.2rem para precios más grandes */
+            font-weight: 700; /* Aumentado de 600 a 700 para más peso */
             color: #fb3463;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Aumentado el shadow para más impacto */
         }
         
         .product-card .price-highlight:hover {
@@ -174,7 +246,7 @@
         }
         
         .carousel-item img {
-            height: 400px;
+            height: 400px; /* Revertido de 600px a 400px */
             object-fit: cover; /* Revertido de 'contain' a 'cover' para recortar imágenes */
         }
         
@@ -187,21 +259,41 @@
             margin: 0 !important;
             padding: 0 !important;
             position: relative;
-            z-index: 1;
+            z-index: 10; /* Mucho más bajo que los elementos fijos */
             overflow: visible;
         }
         
         .carousel-item {
             position: relative;
             overflow: visible;
+            z-index: 10;
         }
         
         .carousel-caption {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 8px;
             padding: 20px;
+            z-index: 15;
         }
         
+        /* Asegurar que el carrusel no se solape con elementos fijos */
+        .carousel-container {
+            position: relative;
+            z-index: 10; /* Mucho más bajo que los elementos fijos */
+        }
+        
+        /* Asegurar que todo el contenido principal esté debajo de los elementos fijos */
+        main {
+            position: relative;
+            z-index: 5; /* El más bajo de todos */
+        }
+        
+        /* Asegurar que todos los elementos del contenido principal estén debajo */
+        main * {
+            position: relative;
+            z-index: 5;
+        }
+
 
         
         .footer {
@@ -217,8 +309,8 @@
             }
             
             .carousel-item img {
-                height: 160px; /* Reducido 60% de 400px a 160px */
-                object-fit: cover; /* Revertido de 'contain' a 'cover' para recortar imágenes */
+                height: 250px; /* Aumentado para mejor visibilidad en móviles */
+                object-fit: cover;
             }
             
             /* Asegurar que el carrusel se vea bien en móviles */
@@ -226,19 +318,60 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 margin-bottom: 2rem;
+                border-radius: 8px;
+                overflow: hidden;
             }
             
             .carousel-caption {
-                padding: 10px;
+                padding: 15px;
                 font-size: 0.9rem;
+                background: rgba(0, 0, 0, 0.7);
+                border-radius: 6px;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
             }
             
             .carousel-caption h2 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+                font-weight: 600;
             }
             
             .carousel-caption p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
+                margin-bottom: 0;
+            }
+            
+            /* Mejorar controles del carrusel en móviles */
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .carousel-control-prev {
+                left: 10px;
+            }
+            
+            .carousel-control-next {
+                right: 10px;
+            }
+            
+            /* Mejorar indicadores en móviles */
+            .carousel-indicators {
+                bottom: 15px;
+            }
+            
+            .carousel-indicators button {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin: 0 3px;
             }
             .navbar-brand img {
                 height: 80px; /* Restaurado al tamaño original */
@@ -264,10 +397,10 @@
             
             /* Reducir altura de cards en móviles */
             .card-img-top {
-                height: 140px; /* Reducido de 220px a 140px para móviles */
+                height: 160px; /* Aumentado de 140px a 160px para mejor visibilidad del producto */
             }
             .product-card {
-                min-height: 202px; /* Reducido de 252px a 202px (20% menos) para móviles */
+                min-height: 120px; /* Reducido de 144px a 120px para cards más compactas */
             }
             /* Asegurar que no haya overflow en móviles */
             .row {
@@ -280,45 +413,85 @@
             }
             /* Ajustar espaciado de cards en móviles */
             .card {
-                margin-bottom: 10px;
+                margin-bottom: 8px; /* Reducido de 10px a 8px */
             }
-            /* Ajustar navbar en móviles */
-            .navbar-nav {
-                margin-left: 0;
-                margin-right: 0;
+            
+            /* Reducir espaciado entre columnas en móviles */
+            .row.g-2 {
+                --bs-gutter-x: 0.5rem;
+                --bs-gutter-y: 0.5rem;
             }
-            .navbar-nav .nav-link {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            /* Correcciones adicionales para visibilidad */
-            .container {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            .navbar {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
+                    /* Ajustar navbar en móviles */
+        .navbar-nav {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .navbar-nav .nav-link {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        /* Correcciones adicionales para visibilidad */
+        .container {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .navbar {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+        /* Mejorar el dropdown en móviles */
+        .dropdown-menu {
+            border: 1px solid #dee2e6;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            margin-top: 0;
+        }
+        
+        /* Asegurar que el botón de búsqueda sea visible */
+        .btn-link {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .btn-link:hover {
+            color: #fb3463;
+        }
             /* Asegurar que el contenido sea visible */
             .card-body {
-                padding: 0.75rem;
+                padding: 0.3rem; /* Reducido de 0.4rem a 0.3rem para cards ultra compactas */
             }
             .card-title {
-                font-size: 1rem;
+                font-size: 0.8rem; /* Reducido de 0.85rem a 0.8rem */
+                margin-bottom: 0.2rem; /* Reducido el margen */
+                line-height: 1.0; /* Ajustar altura de línea */
             }
             .card-text {
-                font-size: 0.85rem;
+                font-size: 0.7rem; /* Reducido de 0.75rem a 0.7rem */
+                line-height: 1.1; /* Ajustar altura de línea */
+                margin-bottom: 0.2rem; /* Reducir margen inferior */
             }
             /* Ajustar precio en móviles */
             .price-highlight {
-                font-size: 1.4rem !important;
+                font-size: 1.1rem !important; /* Reducido de 1.3rem a 1.1rem para cards ultra compactas */
+                margin-top: 0.1rem; /* Reducir margen superior */
             }
             /* Asegurar que el navbar colapsado funcione */
             .navbar-collapse {
                 background-color: #f8f9fa;
                 border-radius: 0.375rem;
                 margin-top: 10px;
+            }
+            
+            /* Optimizar distribución del contenido en cards móviles */
+            .product-card .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+            }
+            
+            .product-card .card-body .mt-auto {
+                margin-top: auto !important;
             }
             /* Asegurar que los dropdowns sean visibles */
             .dropdown-menu {
@@ -329,39 +502,10 @@
             .d-flex {
                 margin: 10px 0;
             }
-            /* Ajustar margen principal para móviles */
-            main {
-                margin-top: 0; /* Sin margen superior ya que el header no es fijo */
-            }
-            
-            /* Estilos específicos para móviles del contacto */
-            .d-lg-none .contact-text {
-                font-size: 0.9rem;
-                font-weight: 500;
-            }
-            
-            .d-lg-none .phone-number {
-                font-size: 1.4rem;
-                font-weight: 700;
-                margin-left: 8px;
-            }
-
-
-        }
-        /* Estilos para el número telefónico */
-        .contact-text {
-            font-size: 0.8rem;
-            font-weight: 500;
-            white-space: nowrap;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .phone-number {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #000000;
-            margin-left: 4px;
-            font-family: 'Inter', sans-serif;
+                         /* Ajustar margen principal para móviles */
+             main {
+                 margin-top: 70px; /* Solo espacio para navbar en móviles */
+             }
         }
         
         /* Aplicar fuente moderna a toda la tipografía */
@@ -373,6 +517,8 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
+
+
     </style>
 </head>
 <body>
@@ -436,13 +582,7 @@
         </div>
     </nav>
 
-         <!-- Contacto telefónico móvil -->
-     <div class="d-lg-none py-2 text-center" style="background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-         <span class="contact-text">
-             ESCRIBENOS AHORA 
-             <span class="phone-number">+58 416 4115781</span>
-         </span>
-     </div>
+
 
     <!-- Contenido principal -->
     <main class="container my-4">
@@ -507,5 +647,64 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript para comportamiento del header -->
+    <script>
+        // Función para manejar el scroll del header y banner
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const topBanner = document.querySelector('.top-banner');
+            
+            // Solo aplicar efectos de scroll en desktop
+            if (window.innerWidth > 768) {
+                if (window.scrollY > 10) {
+                    // Cuando se hace scroll, ocultar banner y contraer header
+                    navbar.classList.add('scrolled');
+                    if (topBanner) {
+                        topBanner.classList.add('hide-banner');
+                    }
+                } else {
+                    // Cuando está en la parte superior, mostrar banner y expandir header
+                    navbar.classList.remove('scrolled');
+                    if (topBanner) {
+                        topBanner.classList.remove('hide-banner');
+                    }
+                }
+            }
+        });
+        
+        // Asegurar que el banner esté visible al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const topBanner = document.querySelector('.top-banner');
+            const navbar = document.querySelector('.navbar');
+            
+            if (topBanner) {
+                topBanner.classList.remove('hide-banner');
+            }
+            
+            // Ajustar navbar según el tamaño de pantalla
+            function adjustNavbar() {
+                if (window.innerWidth <= 768) {
+                    // En móviles, el navbar siempre está en la parte superior
+                    navbar.style.top = '0px';
+                    // Ocultar banner en móviles
+                    if (topBanner) {
+                        topBanner.style.display = 'none';
+                    }
+                } else {
+                    // En desktop, el navbar está debajo del banner
+                    navbar.style.top = '40px';
+                    // Mostrar banner en desktop
+                    if (topBanner) {
+                        topBanner.style.display = 'flex';
+                    }
+                }
+            }
+            
+            // Ejecutar al cargar y al cambiar tamaño de ventana
+            adjustNavbar();
+            window.addEventListener('resize', adjustNavbar);
+        });
+    </script>
 </body>
 </html>

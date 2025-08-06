@@ -4,6 +4,7 @@
 {% block title %}Búsqueda - Catálogo{% endblock %}
 
 {% block content %}
+
 <div class="row">
     <div class="col-12">
         <h2 class="mb-4">
@@ -37,12 +38,8 @@
             <div class="col-6 col-lg-4 mb-3">
                 <a href="{% url 'catalogo:detalle_producto' producto.id %}" class="text-decoration-none">
                     <div class="card h-100 shadow-sm product-card">
-                        {% if producto.imagen %}
+                        {% if producto.imagen and producto.imagen.url %}
                         <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                        {% else %}
-                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
-                            <i class="fas fa-image fa-3x text-muted"></i>
-                        </div>
                         {% endif %}
                         
                         <div class="card-body d-flex flex-column">

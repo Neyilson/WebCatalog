@@ -7,7 +7,6 @@ def home(request):
     """Vista para la página principal del catálogo"""
     productos_destacados = Producto.objects.all()[:6]  # Últimos 6 productos
     categorias = Categoria.objects.all()
-    
     context = {
         'productos_destacados': productos_destacados,
         'categorias': categorias,
@@ -89,8 +88,8 @@ def buscar_productos(request):
     
     context = {
         'productos': productos,
-        'query': query,
         'categorias': categorias,
+        'query': query,
     }
     return render(request, 'CatalogoWeb/buscar_productos.html', context)
 
