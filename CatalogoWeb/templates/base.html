@@ -517,6 +517,98 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
+        
+        /* Estilos específicos para vista detallada del producto */
+        .product-detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        /* Optimizar imágenes en cards de productos relacionados */
+        .related-product-card .card-img-top {
+            height: 200px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        
+        /* Asegurar que las imágenes se vean bien en móviles */
+        @media (max-width: 768px) {
+            .product-detail-image {
+                height: 300px;
+            }
+            
+            .related-product-card .card-img-top {
+                height: 150px;
+            }
+        }
+        
+        /* Mejorar la presentación de la vista detallada */
+        .product-detail-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-detail-container h1 {
+            color: #333;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .product-detail-container .price-highlight {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fb3463;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-detail-container .badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+        
+        /* Botón de WhatsApp */
+        .btn-whatsapp {
+            background-color: #25D366 !important;
+            border-color: #25D366 !important;
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E !important;
+            border-color: #128C7E !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        
+        .btn-whatsapp:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+        }
+        
+        /* Ajustar botón de WhatsApp en móviles */
+        @media (max-width: 768px) {
+            .btn-whatsapp {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.75rem;
+                white-space: nowrap;
+            }
+            
+            .btn-whatsapp .fab {
+                font-size: 0.9rem;
+                margin-right: 0.3rem;
+            }
+        }
 
 
     </style>
