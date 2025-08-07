@@ -20,12 +20,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+import os
 SECRET_KEY = 'django-insecure-!_)r*z83e9p972045e98a**+=3kyw$phfrc@#j4t^afu5bwobo'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# Configuración condicional para entorno local y PythonAnywhere
+if 'PYTHONANYWHERE_DOMAIN' in os.environ or 'pythonanywhere' in os.environ.get('HOSTNAME', ''):
+    DEBUG = False
+    ALLOWED_HOSTS = ['nmarket.pythonanywhere.com']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'nmarket$catalogo',
+            'USER': 'nmarket',
+            'PASSWORD': 'pelusa23$%',
+            'HOST': 'nmarket.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
+    }
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Application definition
@@ -72,15 +92,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Catalogo.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# La configuración de DATABASES ahora es condicional según el entorno
 
 
 # Password validation
