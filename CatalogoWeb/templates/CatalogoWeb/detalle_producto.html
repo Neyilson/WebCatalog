@@ -30,15 +30,15 @@
             </ol>
         </nav>
         
-        <h1 class="mb-3">{{ producto.nombre }}</h1>
-        
-        {% if producto.categoria %}
-        <span class="badge bg-secondary mb-3">{{ producto.categoria.nombre }}</span>
-        {% endif %}
-        
-        <div class="mb-4">
-            <h3 class="price-highlight">${{ producto.precio }}</h3>
-        </div>
+                 <h1 class="mb-3">{{ producto.nombre }}</h1>
+         
+         <div class="mb-4">
+             <h4 style="color: #000000; font-size: 1.5rem; font-weight: 600;">${{ producto.precio }}</h4>
+         </div>
+         
+         {% if producto.categoria %}
+         <p class="mb-3"><strong>Categoría:</strong> <span style="color: #fb3463;">{{ producto.categoria.nombre }}</span></p>
+         {% endif %}
         
         <div class="mb-4">
             <h5>Descripción</h5>
@@ -49,9 +49,9 @@
             <a href="#" class="btn btn-whatsapp btn-lg me-md-2" id="whatsappBtn" target="_blank">
                 <i class="fab fa-whatsapp"></i> ESCRIBENOS A WHATSAPP
             </a>
-            <a href="{% url 'catalogo:lista_productos' %}" class="btn btn-outline-secondary btn-lg">
-                <i class="fas fa-arrow-left"></i> Volver a Productos
-            </a>
+                               <a href="{% url 'catalogo:lista_productos' %}" class="btn btn-outline-secondary btn-lg">
+                       <i class="fas fa-arrow-left"></i> Volver al Catálogo
+                   </a>
         </div>
     </div>
     </div>
