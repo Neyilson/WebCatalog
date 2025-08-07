@@ -5,32 +5,39 @@
 
 {% block content %}
 <div class="row">
-    <!-- Filtros -->
-    <div class="col-lg-3 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-filter"></i> Categorías
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="list-group list-group-flush">
-                    <a href="{% url 'catalogo:lista_productos' %}" class="list-group-item list-group-item-action">
-                        Todas las categorías
-                    </a>
-                    {% for cat in categorias %}
-                    <a href="{% url 'catalogo:productos_por_categoria' cat.id %}" 
-                       class="list-group-item list-group-item-action {% if cat.id == categoria.id %}active{% endif %}">
-                        {{ cat.nombre }}
-                    </a>
-                    {% endfor %}
+    <!-- Filtro Colapsable -->
+    <div class="col-12 mb-3">
+        <div class="filter-collapsible">
+            <button class="btn btn-outline-primary w-100 filter-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+                <i class="fas fa-filter"></i> Filtrar por Categoría
+                <i class="fas fa-chevron-down ms-2 toggle-icon"></i>
+            </button>
+            
+            <div class="collapse" id="filterCollapse">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h6 class="mb-3">
+                            <i class="fas fa-tags"></i> Categorías
+                        </h6>
+                        <div class="list-group list-group-flush">
+                            <a href="{% url 'catalogo:lista_productos' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-th-large me-2"></i>Todas las categorías
+                            </a>
+                            {% for cat in categorias %}
+                            <a href="{% url 'catalogo:productos_por_categoria' cat.id %}" 
+                               class="list-group-item list-group-item-action {% if cat.id == categoria.id %}active{% endif %}">
+                                <i class="fas fa-tag me-2"></i>{{ cat.nombre }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- Productos de la Categoría -->
-    <div class="col-lg-9">
+    <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2>

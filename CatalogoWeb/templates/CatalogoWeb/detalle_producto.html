@@ -17,11 +17,11 @@
     <div class="col-md-6">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'catalogo:home' %}" class="text-decoration-none">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'catalogo:lista_productos' %}" class="text-decoration-none">Productos</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'catalogo:home' %}" class="text-decoration-none breadcrumb-link">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'catalogo:lista_productos' %}" class="text-decoration-none breadcrumb-link">Productos</a></li>
                 {% if producto.categoria %}
                 <li class="breadcrumb-item">
-                    <a href="{% url 'catalogo:productos_por_categoria' producto.categoria.id %}" class="text-decoration-none">
+                    <a href="{% url 'catalogo:productos_por_categoria' producto.categoria.id %}" class="text-decoration-none breadcrumb-link">
                         {{ producto.categoria.nombre }}
                     </a>
                 </li>
