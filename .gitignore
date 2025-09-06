@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# VSCode
+.vscode/
+
+# Entornos virtuales
+venv/
+.env/
+*.env
+
+# Archivos de configuración y temporales
+*.bak
+*.swp
+*.tmp
+
+# Archivos de Office y exportaciones
+*.docx
+*.xlsx
+*.xls
+*.csv
+
+# Otros
+.DS_Store
+Thumbs.db
+
+# Pipenv
+Pipfile.lock
+
+# Node
+node_modules/
+
+# Archivos personales
+productos.json
+categorias.json
