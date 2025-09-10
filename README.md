@@ -152,27 +152,27 @@ You can modify the following configurations in `Catalogo/settings.py`:
 ## 📱 Screenshots
 
 ### Homepage
-![Homepage](screenshots/homepage.png)
+![Homepage](screenshots/homepage.jpg)
 *Main page showing featured products and category navigation*
 
 ### Product Listing
-![Product List](screenshots/product-list.png)
+![Product List](screenshots/product-list.jpg)
 *Complete product catalog with search and filter options*
 
 ### Product Details
-![Product Detail](screenshots/product-detail.png)
+![Product Detail](screenshots/product-detail.jpg)
 *Detailed product view with related products*
 
 ### Search Results
-![Search Results](screenshots/search-results.png)
+![Search Results](screenshots/search-results.jpg)
 *Search functionality with filtered results*
 
 ### Category View
-![Category Products](screenshots/category-products.png)
+![Category Products](screenshots/category-products.jpg)
 *Products organized by categories*
 
 ### Admin Panel
-![Admin Panel](screenshots/admin-panel.png)
+![Admin Panel](screenshots/admin-panel.jpg)
 *Custom administration dashboard*
 
 ## 🚀 Deployment
