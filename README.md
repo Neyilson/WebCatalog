@@ -210,8 +210,8 @@ This project is under the MIT License. See the `LICENSE` file for more details.
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your-email@example.com
+- GitHub: [@Neyilson](https://github.com/Neyilson)
+- Email: ndsc4110@gmail.com
 
 ## 🙏 Acknowledgments
 
